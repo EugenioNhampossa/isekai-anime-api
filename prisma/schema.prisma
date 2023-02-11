@@ -9,3 +9,51 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Anime {
+  id               String      @id
+  id_author        String
+  id_studio        String
+  originalTitle    String
+  alternativeTitle String?
+  synopsis         String
+  image            String
+  episodes         Int
+  seasons          Int
+  rating           Int
+  releaseDate      DateTime
+  endDate          DateTime?
+  Character        Character[]
+  Author           Author      @relation(fields: [id_author], references: [id])
+  Studio           Studio      @relation(fields: [id_studio], references: [id])
+  Genre            Genre[]
+}
+
+model Character {
+  id          String  @id
+  id_anime    String
+  name        String
+  main        Boolean @default(false)
+  description String
+  image       String
+  Anime       Anime   @relation(fields: [id_anime], references: [id])
+}
+
+model Studio {
+  id    String  @id
+  name  String
+  Anime Anime[]
+}
+
+model Author {
+  id    String  @id
+  name  String
+  Anime Anime[]
+}
+
+model Genre {
+  id          String  @id
+  title       String
+  description String
+  Anime       Anime[]
+}
