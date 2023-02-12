@@ -1,3 +1,6 @@
 import { app } from "./app";
+import { logger } from "./logger";
 
-app.listen(process.env.PORT || 3333, () => console.log("Server running 🚀 "));
+app.listen(process.env.PORT || 3333, () =>
+    logger.info("Server running 🚀 ")
+);
