@@ -10,6 +10,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id       String @id
+  email    String @unique
+  password String
+}
+
 model Anime {
   id               String      @id
   id_author        String
