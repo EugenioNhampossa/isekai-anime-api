@@ -32,7 +32,7 @@ model Anime {
 model Character {
   id          String  @id
   id_anime    String
-  name        String
+  name        String  @unique
   main        Boolean @default(false)
   description String
   image       String
@@ -41,7 +41,7 @@ model Character {
 
 model Studio {
   id    String  @id
-  name  String
+  name  String  @unique
   Anime Anime[]
 }
 
@@ -53,7 +53,7 @@ model Author {
 
 model Genre {
   id          String  @id
-  title       String
+  title       String  @unique
   description String
   Anime       Anime[]
 }
