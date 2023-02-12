@@ -4,7 +4,7 @@ import { IGenreRepository } from "../IGenreRepository";
 
 export class GenreRepository implements IGenreRepository {
   async create(genre: Genre): Promise<Genre> {
-    return prisma.genre.create({
+    return await prisma.genre.create({
       data: {
         id: genre.id,
         title: genre.title,

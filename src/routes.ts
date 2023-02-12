@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { logger } from "./logger";
-import { createGenreController } from "./usecases/CreateGenreUseCase";
+import { createGenreController } from "./usecases/Genre/CreateGenreUseCase";
 const router = Router();
 
 //GENRE

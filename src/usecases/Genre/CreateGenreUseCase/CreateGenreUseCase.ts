@@ -1,5 +1,5 @@
-import { Genre } from "../../entities/Genre";
-import { IGenreRepository } from "../../repositories/IGenreRepository";
+import { Genre } from "../../../entities/Genre";
+import { IGenreRepository } from "../../../repositories/IGenreRepository";
 import { ICreateGenreRequestDTO } from "./CreateGenreDTO";
 
 export class CreateGenreUseCase {

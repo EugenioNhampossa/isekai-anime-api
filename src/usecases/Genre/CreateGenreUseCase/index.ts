@@ -1,4 +1,4 @@
-import { GenreRepository } from "../../repositories/implementations/GenreRepository";
+import { GenreRepository } from "../../../repositories/implementations/GenreRepository";
 import { CreateGenreController } from "./CreateGenreController";
 import { CreateGenreUseCase } from "./CreateGenreUseCase";
 

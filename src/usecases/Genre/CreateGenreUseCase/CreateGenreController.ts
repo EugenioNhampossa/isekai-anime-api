@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { logger } from "../../logger";
+import { logger } from "../../../logger";
 import { CreateGenreUseCase } from "./CreateGenreUseCase";
 
 export class CreateGenreController {
