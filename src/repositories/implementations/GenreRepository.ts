@@ -1,8 +1,23 @@
+import { Prisma } from "@prisma/client";
+import { createPaginator } from "prisma-pagination";
+import { IGenreFilter } from "../../@types/IGenreFilter";
 import { Genre } from "../../entities/Genre";
 import { prisma } from "../../prisma";
-import { IGenreRepository } from "../IGenreRepository";
+import { IGenreData, IGenreRepository } from "../IGenreRepository";
 
 export class GenreRepository implements IGenreRepository {
+  async findAll(filter: IGenreFilter): Promise<IGenreData> {
+    const { page, perPage, title } = filter;
+    const paginate = createPaginator({ page, perPage });
+    return await paginate<Genre, Prisma.GenreFindManyArgs>(prisma.genre, {
+      where: {
+        title: {
+          contains: title,
+        },
+      },
+    });
+  }
+
   async create(genre: Genre): Promise<Genre> {
     return await prisma.genre.create({
       data: {
@@ -19,9 +34,6 @@ export class GenreRepository implements IGenreRepository {
     throw new Error("Method not implemented.");
   }
   async findUnique(id: string): Promise<Genre> {
-    throw new Error("Method not implemented.");
-  }
-  async findAll(): Promise<Genre[]> {
     throw new Error("Method not implemented.");
   }
 }
