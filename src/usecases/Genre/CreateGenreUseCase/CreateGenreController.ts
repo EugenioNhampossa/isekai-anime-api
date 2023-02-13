@@ -10,19 +10,12 @@ export class CreateGenreController {
   }
 
   async handle(request: Request, response: Response): Promise<Response> {
-    try {
-      const { title, description } = request.body;
-      const genre = await this.createGenreUseCase.execute({
-        title,
-        description,
-      });
-      logger.info("Genre created");
-      return response.status(201).json(genre);
-    } catch (error) {
-      logger.error(error.message);
-      return response.status(400).json({
-        message: error.message || "Unexpected Error",
-      });
-    }
+    const { title, description } = request.body;
+    const genre = await this.createGenreUseCase.execute({
+      title,
+      description,
+    });
+    logger.info("Genre created");
+    return response.status(201).json(genre);
   }
 }
