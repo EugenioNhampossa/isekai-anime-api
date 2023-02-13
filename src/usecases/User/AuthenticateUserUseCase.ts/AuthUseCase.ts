@@ -1,3 +1,4 @@
+import { logger } from "../../../logger";
 import { IHashProvider } from "../../../providers/IHashProvider";
 import { ITokenProvider } from "../../../providers/ITokenProvider";
 import {
@@ -25,9 +26,11 @@ export class AuthUseCase {
     const existingUser = await this.userRepository.findUnique(data.email);
 
     if (!existingUser) {
+      logger.warn("User does not exist");
       throw new Error("User or password invalid");
     }
     if (!this.hashProvider.compare(data.password, existingUser.password)) {
+      logger.warn("Invalid Password");
       throw new Error("User or password invalid");
     }
     return { token: this.tokenProvider.generateAccessToken(existingUser) };

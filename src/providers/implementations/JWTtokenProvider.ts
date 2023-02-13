@@ -1,6 +1,7 @@
 import { User } from "../../entities/User";
 import { ITokenProvider } from "../ITokenProvider";
 import jwt from "jsonwebtoken";
+import { logger } from "../../logger";
 
 let refreshTokens = [];
 
@@ -38,6 +39,7 @@ export class JwtWebTokenProvider implements ITokenProvider {
   }
 
   generateAccessToken(user: User): string {
+    logger.info("Generating token");
     return jwt.sign(
       {
         id: user.id,

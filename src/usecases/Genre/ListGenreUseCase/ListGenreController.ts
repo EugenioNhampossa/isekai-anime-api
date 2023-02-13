@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { logger } from "../../../logger";
 import { ListGenreUseCase } from "./ListGenreUseCase";
 
 export class ListGenreController {
@@ -13,12 +14,15 @@ export class ListGenreController {
     const perPage = parseInt(request.query.perPage?.toString()) | 20;
     const { title }: any = request.query;
 
+    logger.info("Pagination", { page, perPage });
+
     const genreList = await this.listGenreUseCase.execute({
       page,
       perPage,
       title,
     });
 
+    logger.info("List retrieved");
     return response.status(200).json(genreList);
   }
 }
