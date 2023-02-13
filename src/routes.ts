@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { logger } from "./logger";
 import { createGenreController } from "./usecases/Genre/CreateGenreUseCase";
+import { authController } from "./usecases/User/AuthenticateUserUseCase.ts";
 import { createUserController } from "./usecases/User/CreateUserUseCase";
 const router = Router();
 
@@ -12,6 +13,15 @@ router.post("/users", (req, res) => {
     withToken: !!req.headers.authorization,
   });
   return createUserController.handle(req, res);
+});
+
+router.post("/login", (req, res) => {
+  logger.info("Login", {
+    hostname: req.hostname,
+    data: { email: req.body.email },
+    withToken: !!req.headers.authorization,
+  });
+  return authController.handle(req, res);
 });
 
 //GENRE========================
