@@ -33,7 +33,7 @@ router.post("/genres", (req, res) => {
   return createGenreController.handle(req, res);
 });
 
-router.post("/genres", (req, res) => {
+router.get("/genres", (req, res) => {
   logger.info("List of genres", {
     hostname: req.hostname,
     query: req.query,
