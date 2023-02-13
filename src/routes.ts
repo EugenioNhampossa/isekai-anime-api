@@ -19,17 +19,24 @@ router.post("/login", (req, res) => {
   logger.info("Login", {
     hostname: req.hostname,
     data: { email: req.body.email },
-    withToken: !!req.headers.authorization,
   });
   return authController.handle(req, res);
 });
 
 //GENRE========================
 router.post("/genres", (req, res) => {
-  logger.info("Crating genre", {
+  logger.info("Crate genre", {
     hostname: req.hostname,
     data: req.body,
     withToken: !!req.headers.authorization,
+  });
+  return createGenreController.handle(req, res);
+});
+
+router.post("/genres", (req, res) => {
+  logger.info("List of genres", {
+    hostname: req.hostname,
+    query: req.query,
   });
   return createGenreController.handle(req, res);
 });

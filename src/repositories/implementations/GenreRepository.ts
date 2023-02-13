@@ -15,6 +15,11 @@ export class GenreRepository implements IGenreRepository {
           contains: title,
         },
       },
+      include: {
+        _count: {
+          select: { Anime: true },
+        },
+      },
     });
   }
 
