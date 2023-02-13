@@ -14,8 +14,6 @@ export class ListGenreController {
     const perPage = parseInt(request.query.perPage?.toString()) | 20;
     const { title }: any = request.query;
 
-    logger.info("Pagination", { page, perPage });
-
     const genreList = await this.listGenreUseCase.execute({
       page,
       perPage,

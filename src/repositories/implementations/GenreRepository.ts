@@ -13,6 +13,7 @@ export class GenreRepository implements IGenreRepository {
       where: {
         title: {
           contains: title,
+          mode: "insensitive",
         },
       },
       include: {

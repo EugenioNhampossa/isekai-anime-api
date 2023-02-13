@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { logger } from "./logger";
 import { createGenreController } from "./usecases/Genre/CreateGenreUseCase";
+import { listGenreController } from "./usecases/Genre/ListGenreUseCase";
 import { authController } from "./usecases/User/AuthenticateUserUseCase.ts";
 import { createUserController } from "./usecases/User/CreateUserUseCase";
 const router = Router();
@@ -38,7 +39,7 @@ router.get("/genres", (req, res) => {
     hostname: req.hostname,
     query: req.query,
   });
-  return createGenreController.handle(req, res);
+  return listGenreController.handle(req, res);
 });
 
 export { router };
