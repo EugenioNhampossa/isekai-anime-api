@@ -2,6 +2,7 @@ import { Router } from "express";
 import { logger } from "./logger";
 import { createGenreController } from "./usecases/Genre/CreateGenreUseCase";
 import { listGenreController } from "./usecases/Genre/ListGenreUseCase";
+import { createStudioController } from "./usecases/Studio/CreateStudioUseCase";
 import { authController } from "./usecases/User/AuthenticateUserUseCase.ts";
 import { createUserController } from "./usecases/User/CreateUserUseCase";
 const router = Router();
@@ -40,6 +41,16 @@ router.get("/genres", (req, res) => {
     query: req.query,
   });
   return listGenreController.handle(req, res);
+});
+
+//STUDIO=============================
+router.post("/studios", (req, res) => {
+  logger.info("Crate studio", {
+    hostname: req.hostname,
+    data: req.body,
+    withToken: !!req.headers.authorization,
+  });
+  return createStudioController.handle(req, res);
 });
 
 export { router };

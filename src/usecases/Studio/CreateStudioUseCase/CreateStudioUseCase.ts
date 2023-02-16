@@ -2,7 +2,7 @@ import { Studio } from "../../../entities/Studio";
 import { IStudioRepository } from "../../../repositories/IStudioRepository";
 import { ICreateStudioRequestDTO } from "./CreateStudioDTO";
 
-export class CrateStudioUseCase {
+export class CreateStudioUseCase {
   private studioRepository: IStudioRepository;
 
   constructor(studioRepository: IStudioRepository) {
