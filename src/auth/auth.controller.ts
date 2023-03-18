@@ -17,13 +17,13 @@ import { AuthDTO } from './dto';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Post('/local/signup')
+  @Post('/signup')
   @HttpCode(HttpStatus.CREATED)
   localSignup(@Body() dto: AuthDTO): Promise<Tokens> {
     return this.authService.localSignup(dto);
   }
 
-  @Post('/local/signin')
+  @Post('/signin')
   @HttpCode(HttpStatus.OK)
   localSignin(@Body() dto: AuthDTO): Promise<Tokens> {
     return this.authService.localSignin(dto);
