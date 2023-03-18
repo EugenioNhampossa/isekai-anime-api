@@ -4,12 +4,14 @@ import { AuthDTO } from './dto';
 import * as bcrypt from 'bcrypt';
 import { Tokens } from './@types';
 import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
   constructor(
     private prismaService: PrismaService,
     private jwtService: JwtService,
+    private config: ConfigService,
   ) {}
 
   async localSignup(dto: AuthDTO): Promise<Tokens> {
@@ -108,10 +110,10 @@ export class AuthService {
         {
           sub: userId,
           email,
-          role: 'admin',
+          role,
         },
         {
-          secret: 'access-secret-key',
+          secret: this.config.get('ACCESS_KEY'),
           expiresIn: '15m',
         },
       ),
@@ -119,10 +121,10 @@ export class AuthService {
         {
           sub: userId,
           email,
-          role: 'admin',
+          role,
         },
         {
-          secret: 'refresh-secret-key',
+          secret: this.config.get('REFRESH_KEY'),
           expiresIn: '168h',
         },
       ),
