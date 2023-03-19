@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable, Logger } from '@nestjs/common';
 import { Prisma, Studio } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { paginante } from 'src/utils';
@@ -7,10 +7,13 @@ import { CreateStudioDto, FilterStudioDto, UpdateStudioDto } from './dto';
 
 @Injectable()
 export class StudioService {
+  logger = new Logger(StudioService.name);
+
   constructor(private prisma: PrismaService) {}
 
   async create(createStudioDto: CreateStudioDto): Promise<Studio> {
-    return await this.prisma.studio
+    this.logger.log('Saving studio data...', createStudioDto);
+    const studio = await this.prisma.studio
       .create({
         data: {
           ...createStudioDto,
@@ -18,14 +21,22 @@ export class StudioService {
       })
       .catch((error) => {
         if (error.code === 'P2002') {
-          throw new ForbiddenException('Name of the author already exists');
+          this.logger.warn('Name of the studio already exists');
+          throw new ForbiddenException('Name of the studio already exists');
         }
+        this.logger.error('Unexpected error', error);
         throw error;
       });
+
+    this.logger.log('Studio Saved');
+
+    return studio;
   }
 
   async findAll(filter: FilterStudioDto): Promise<StudioList> {
-    return await paginante<Studio, Prisma.StudioFindManyArgs>(
+    this.logger.log('Gettitng studio list...', filter);
+
+    const studioList = await paginante<Studio, Prisma.StudioFindManyArgs>(
       this.prisma.studio,
       {
         where: {
@@ -35,33 +46,65 @@ export class StudioService {
         },
       },
       { page: filter.page, perPage: filter.perPage },
-    );
+    ).catch((error) => {
+      this.logger.error('Unexpected error', error);
+      throw error;
+    });
+    this.logger.log('List returned');
+    return studioList;
   }
 
   async findOne(id: string): Promise<Studio> {
-    return await this.prisma.studio.findUnique({
-      where: {
-        id,
-      },
-    });
+    this.logger.log('Getting studio by id...', { id });
+    const studio = await this.prisma.studio
+      .findUnique({
+        where: {
+          id,
+        },
+      })
+      .catch((error) => {
+        this.logger.error('Unexpected error', error);
+        throw error;
+      });
+    this.logger.log('Studio returned');
+    return studio;
   }
 
   async update(id: string, updateStudioDto: UpdateStudioDto): Promise<Studio> {
-    return await this.prisma.studio.update({
-      where: {
-        id,
-      },
-      data: {
-        ...updateStudioDto,
-      },
-    });
+    this.logger.log('Updating studio...', { id, updateStudioDto });
+    const studio = await this.prisma.studio
+      .update({
+        where: {
+          id,
+        },
+        data: {
+          ...updateStudioDto,
+        },
+      })
+      .catch((error) => {
+        this.logger.error('Unexpected error', error);
+
+        throw error;
+      });
+    this.logger.log('Studio updated');
+
+    return studio;
   }
 
   async remove(id: string): Promise<void> {
-    await this.prisma.studio.delete({
-      where: {
-        id,
-      },
-    });
+    this.logger.log('Deleting studio...', { id });
+
+    await this.prisma.studio
+      .delete({
+        where: {
+          id,
+        },
+      })
+      .catch((error) => {
+        this.logger.error('Unexpected error', error);
+
+        throw error;
+      });
+    this.logger.log('Studio deleted');
   }
 }
