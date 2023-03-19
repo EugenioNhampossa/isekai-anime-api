@@ -32,7 +32,6 @@ export class GenreController {
   @Patch(':id')
   @UseGuards(AtGuard, RoleGuard)
   @Roles(Role.Admin)
-  @HttpCode(HttpStatus.OK)
   update(@Param('id') id: string, @Body() updateGenreDto: UpdateGenreDto) {
     return this.genreService.update(id, updateGenreDto);
   }

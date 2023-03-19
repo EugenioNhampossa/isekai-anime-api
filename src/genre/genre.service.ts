@@ -2,7 +2,7 @@ import { ForbiddenException, Injectable } from '@nestjs/common';
 import { Genre, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { paginante } from 'src/utils';
-import { genreList } from './@types/genreList.type';
+import { GenreList } from './@types/genre-list.type';
 import { FilterGenreDto } from './dto';
 import { CreateGenreDto } from './dto/create-genre.dto';
 import { UpdateGenreDto } from './dto/update-genre.dto';
@@ -26,7 +26,7 @@ export class GenreService {
       });
   }
 
-  async findAll(filter: FilterGenreDto): Promise<genreList> {
+  async findAll(filter: FilterGenreDto): Promise<GenreList> {
     return await paginante<Genre, Prisma.GenreFindManyArgs>(
       this.prisma.genre,
       {

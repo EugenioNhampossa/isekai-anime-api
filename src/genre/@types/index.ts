@@ -1,1 +1,1 @@
-export * from './genreList.type';
+export * from './genre-list.type';
