@@ -5,6 +5,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { UserModule } from './user/user.module';
 import { GenreModule } from './genre/genre.module';
 import { AuthorModule } from './author/author.module';
+import { StudioModule } from './studio/studio.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AuthorModule } from './author/author.module';
     UserModule,
     GenreModule,
     AuthorModule,
+    StudioModule,
   ],
 })
 export class AppModule {}
