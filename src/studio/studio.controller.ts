@@ -6,37 +6,52 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
+  Query,
 } from '@nestjs/common';
 import { StudioService } from './studio.service';
-import { CreateStudioDto } from './dto/create-studio.dto';
-import { UpdateStudioDto } from './dto/update-studio.dto';
+import { AtGuard, RoleGuard } from 'src/common/guards';
+import { Role } from 'src/common/enums';
+import { Roles } from 'src/common/decorators/roles.decorator';
+import { Studio } from '@prisma/client';
+import { StudioList } from './@types';
+import { CreateStudioDto, FilterStudioDto, UpdateStudioDto } from './dto';
 
-@Controller('studio')
+@Controller('studios')
 export class StudioController {
   constructor(private readonly studioService: StudioService) {}
 
   @Post()
-  create(@Body() createStudioDto: CreateStudioDto) {
+  @UseGuards(AtGuard, RoleGuard)
+  @Roles(Role.Admin)
+  create(@Body() createStudioDto: CreateStudioDto): Promise<Studio> {
     return this.studioService.create(createStudioDto);
   }
 
-  @Get()
-  findAll() {
-    return this.studioService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.studioService.findOne(+id);
-  }
-
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStudioDto: UpdateStudioDto) {
-    return this.studioService.update(+id, updateStudioDto);
+  @UseGuards(AtGuard, RoleGuard)
+  @Roles(Role.Admin)
+  update(
+    @Param('id') id: string,
+    @Body() updateStudioDto: UpdateStudioDto,
+  ): Promise<Studio> {
+    return this.studioService.update(id, updateStudioDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.studioService.remove(+id);
+  @UseGuards(AtGuard, RoleGuard)
+  @Roles(Role.Admin)
+  remove(@Param('id') id: string): Promise<void> {
+    return this.studioService.remove(id);
+  }
+
+  @Get()
+  findAll(@Query() filter: FilterStudioDto): Promise<StudioList> {
+    return this.studioService.findAll(filter);
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string): Promise<Studio> {
+    return this.studioService.findOne(id);
   }
 }
