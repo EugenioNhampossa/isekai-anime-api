@@ -1,7 +1,7 @@
 import { ForbiddenException, Injectable, Logger } from '@nestjs/common';
 import { Prisma, Studio } from '@prisma/client';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { paginante } from 'src/utils';
+import { PrismaService } from '../prisma/prisma.service';
+import { paginante } from '../utils';
 import { StudioList } from './@types';
 import { CreateStudioDto, FilterStudioDto, UpdateStudioDto } from './dto';
 

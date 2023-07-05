@@ -1,5 +1,5 @@
 import { Genre } from '@prisma/client';
-import { pagination } from 'src/@types';
+import { pagination } from '../../@types';
 
 export type GenreList = {
   data: Genre[];

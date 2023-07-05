@@ -1,5 +1,5 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { AuthDTO } from './dto';
 import * as bcrypt from 'bcrypt';
 import { Tokens } from './@types';
@@ -44,7 +44,7 @@ export class AuthService {
     if (!user) {
       throw new ForbiddenException('Invalid email or password');
     }
-    const matches = bcrypt.compare(dto.password, user.hash);
+    const matches = await bcrypt.compare(dto.password, user.hash);
 
     if (!matches) {
       throw new ForbiddenException('Invalid email or password');

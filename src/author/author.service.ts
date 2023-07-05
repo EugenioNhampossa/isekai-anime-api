@@ -1,7 +1,7 @@
 import { ForbiddenException, Injectable, Logger } from '@nestjs/common';
 import { Author, Prisma } from '@prisma/client';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { paginante } from 'src/utils';
+import { PrismaService } from '../prisma/prisma.service';
+import { paginante } from '../utils';
 import { AuthorList } from './@types';
 import { AuthorFilterDto, CreateAuthorDto, UpdateAuthorDto } from './dto';
 

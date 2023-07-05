@@ -10,9 +10,9 @@ import {
   Query,
 } from '@nestjs/common';
 import { StudioService } from './studio.service';
-import { AtGuard, RoleGuard } from 'src/common/guards';
-import { Role } from 'src/common/enums';
-import { Roles } from 'src/common/decorators/roles.decorator';
+import { AtGuard, RoleGuard } from '../common/guards';
+import { Role } from '../common/enums';
+import { Roles } from '../common/decorators/roles.decorator';
 import { Studio } from '@prisma/client';
 import { StudioList } from './@types';
 import { CreateStudioDto, FilterStudioDto, UpdateStudioDto } from './dto';

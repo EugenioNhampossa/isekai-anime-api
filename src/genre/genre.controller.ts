@@ -12,9 +12,9 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { GenreService } from './genre.service';
-import { AtGuard, RoleGuard } from 'src/common/guards';
-import { Roles } from 'src/common/decorators/roles.decorator';
-import { Role } from 'src/common/enums';
+import { AtGuard, RoleGuard } from '../common/guards';
+import { Roles } from '../common/decorators/roles.decorator';
+import { Role } from '../common/enums';
 import { FilterGenreDto, CreateGenreDto, UpdateGenreDto } from './dto';
 
 @Controller('genres')

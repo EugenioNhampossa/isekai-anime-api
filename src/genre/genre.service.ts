@@ -1,7 +1,7 @@
 import { ForbiddenException, Injectable, Logger } from '@nestjs/common';
 import { Genre, Prisma } from '@prisma/client';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { paginante } from 'src/utils';
+import { PrismaService } from '../prisma/prisma.service';
+import { paginante } from '../utils';
 import { GenreList } from './@types/genre-list.type';
 import { FilterGenreDto } from './dto';
 import { CreateGenreDto } from './dto/create-genre.dto';
