@@ -1,4 +1,9 @@
-import { ForbiddenException, Injectable, Logger } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -62,14 +67,66 @@ export class CharacterService {
   }
 
   async findOne(id: string) {
-    return `This action returns a #${id} character`;
+    this.logger.log('Getting an character by id...', { id });
+
+    const character = await this.prisma.character
+      .findUnique({
+        where: {
+          id,
+        },
+      })
+      .catch((error) => {
+        if (error.code === 'P2025') {
+          throw new NotFoundException('Character not found');
+        }
+
+        this.logger.error('Unexpected Error', error);
+        throw error;
+      });
+    this.logger.log('Character returned');
+    return character;
   }
 
   async update(id: string, updateCharacterDto: UpdateCharacterDto) {
-    return `This action updates a #${id} character`;
+    this.logger.log('Updating an character...', { id, updateCharacterDto });
+    const newCharacter = await this.prisma.character
+      .update({
+        where: {
+          id,
+        },
+        data: {
+          ...updateCharacterDto,
+        },
+      })
+      .catch((error) => {
+        if (error.code === 'P2025') {
+          throw new NotFoundException('Character not found');
+        }
+        this.logger.error('Unexpected Error', error);
+        throw error;
+      });
+
+    this.logger.log('Character updated');
+    return newCharacter;
   }
 
   async remove(id: string) {
-    return `This action removes a #${id} character`;
+    this.logger.log('Deleting an character...', { id });
+    await this.prisma.character
+      .delete({
+        where: {
+          id,
+        },
+      })
+      .catch((error) => {
+        if (error.code === 'P2025') {
+          throw new NotFoundException('Character not found');
+        }
+
+        this.logger.error('Unexpected Error', error);
+
+        throw error;
+      });
+    this.logger.log('Character deleted');
   }
 }
