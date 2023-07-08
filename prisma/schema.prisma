@@ -24,13 +24,12 @@ model Anime {
   id               String      @id @default(uuid())
   id_author        String
   id_studio        String
-  originalTitle    String
-  alternativeTitle String?
-  synopsis         String
+  title    String @unique
+  synopsis         String?
   image            String
   episodes         Int
   seasons          Int
-  rating           Int
+  rating           Decimal     @default(0.0)
   releaseDate      DateTime
   endDate          DateTime?
   Character        Character[]
@@ -40,13 +39,13 @@ model Anime {
 }
 
 model Character {
-  id          String  @id @default(uuid())
+  id          String   @id @default(uuid())
   id_anime    String
   name        String
   main        Boolean? @default(false)
   description String?
   image       String
-  Anime       Anime   @relation(fields: [id_anime], references: [id])
+  Anime       Anime    @relation(fields: [id_anime], references: [id])
 }
 
 model Studio {
