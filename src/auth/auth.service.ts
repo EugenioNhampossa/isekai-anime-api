@@ -16,11 +16,13 @@ export class AuthService {
 
   async localSignup(dto: AuthDTO): Promise<Tokens> {
     const hash = await this.hashData(dto.password);
+
     const user = await this.prismaService.user
       .create({
         data: {
           email: dto.email,
           hash,
+          role: dto.role,
         },
       })
       .catch((error) => {
