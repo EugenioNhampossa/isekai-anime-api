@@ -281,4 +281,20 @@ describe('AppController (e2e)', () => {
       });
     });
   });
+
+  describe('Character', () => {
+    describe('Create new Character', () => {
+      it('should create a new character', () => {
+        return pactum
+          .spec()
+          .post('/characters')
+          .expectStatus(201)
+          .withBody({
+            name: 'studios´s name',
+          })
+          .stores('studioId', 'id')
+          .withHeaders({ Authorization: 'Bearer $S{access_token}' });
+      });
+    });
+  });
 });

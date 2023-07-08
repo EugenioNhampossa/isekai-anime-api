@@ -42,9 +42,9 @@ model Anime {
 model Character {
   id          String  @id @default(uuid())
   id_anime    String
-  name        String  @unique
-  main        Boolean @default(false)
-  description String
+  name        String
+  main        Boolean? @default(false)
+  description String?
   image       String
   Anime       Anime   @relation(fields: [id_anime], references: [id])
 }
