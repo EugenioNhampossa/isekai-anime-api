@@ -21,21 +21,21 @@ model User {
 }
 
 model Anime {
-  id               String      @id @default(uuid())
-  id_author        String
-  id_studio        String
-  title    String @unique
-  synopsis         String?
-  image            String
-  episodes         Int
-  seasons          Int
-  rating           Decimal     @default(0.0)
-  releaseDate      DateTime
-  endDate          DateTime?
-  Character        Character[]
-  Author           Author      @relation(fields: [id_author], references: [id])
-  Studio           Studio      @relation(fields: [id_studio], references: [id])
-  Genre            Genre[]
+  id          String      @id @default(uuid())
+  id_author   String
+  id_studio   String
+  title       String      @unique
+  synopsis    String?
+  image       String
+  episodes    Int
+  seasons     Int
+  rating      Decimal     @default(0.0)
+  releaseDate DateTime
+  endDate     DateTime?
+  Character   Character[]
+  Author      Author      @relation(fields: [id_author], references: [id])
+  Studio      Studio      @relation(fields: [id_studio], references: [id])
+  Genre       Genre[]
 }
 
 model Character {
@@ -45,7 +45,7 @@ model Character {
   main        Boolean? @default(false)
   description String?
   image       String
-  Anime       Anime    @relation(fields: [id_anime], references: [id])
+  Anime       Anime    @relation(fields: [id_anime], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Studio {
