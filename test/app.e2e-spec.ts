@@ -162,138 +162,170 @@ describe('AppController (e2e)', () => {
   });
 
   describe('Author', () => {
-    describe('Create new Author', () => {
-      it('should create a new author', () => {
-        return pactum
-          .spec()
-          .post('/authors')
-          .expectStatus(201)
-          .withBody({
-            name: 'Author´s name',
-          })
-          .stores('authorId', 'id')
-          .withHeaders({ Authorization: 'Bearer $S{access_token}' });
-      });
-    });
-
-    describe('List all authors', () => {
-      it('should create a new author', () => {
-        return pactum.spec().get('/authors').expectStatus(200);
-      });
-    });
-
-    describe('Get one author', () => {
-      it('should get one author', () => {
-        return pactum
-          .spec()
-          .get('/authors/{id}')
-          .withPathParams('id', '$S{authorId}')
-          .expectStatus(200);
-      });
-    });
-
-    describe('Create not create an Author', () => {
-      it('should not create a new author without authorization', () => {
-        return pactum.spec().post('/authors').expectStatus(401).withBody({
+    it('should create a new author', () => {
+      return pactum
+        .spec()
+        .post('/authors')
+        .expectStatus(201)
+        .withBody({
           name: 'Author´s name',
-        });
+        })
+        .stores('authorId', 'id')
+        .withHeaders({ Authorization: 'Bearer $S{access_token}' });
+    });
+
+    it('should create a new author', () => {
+      return pactum.spec().get('/authors').expectStatus(200);
+    });
+
+    it('should get one author', () => {
+      return pactum
+        .spec()
+        .get('/authors/{id}')
+        .withPathParams('id', '$S{authorId}')
+        .expectStatus(200);
+    });
+
+    it('should not create a new author without authorization', () => {
+      return pactum.spec().post('/authors').expectStatus(401).withBody({
+        name: 'Author´s name',
       });
     });
   });
 
   describe('Genre', () => {
-    describe('Create new Genre', () => {
-      it('should create a new genre', () => {
-        return pactum
-          .spec()
-          .post('/genres')
-          .expectStatus(201)
-          .withBody({
-            title: 'genres´s name',
-            decription: 'description',
-          })
-          .stores('genreId', 'id')
-          .withHeaders({ Authorization: 'Bearer $S{access_token}' });
-      });
+    it('should create a new genre', () => {
+      return pactum
+        .spec()
+        .post('/genres')
+        .expectStatus(201)
+        .withBody({
+          title: 'genres´s name',
+          decription: 'description',
+        })
+        .stores('genreId', 'id')
+        .withHeaders({ Authorization: 'Bearer $S{access_token}' });
     });
 
-    describe('List all genres', () => {
-      it('should create a new genre', () => {
-        return pactum.spec().get('/genres').inspect().expectStatus(200);
-      });
+    it('should list all genres', () => {
+      return pactum.spec().get('/genres').expectStatus(200);
     });
 
-    describe('Get one genre', () => {
-      it('should get one genre', () => {
-        return pactum
-          .spec()
-          .get('/genres/{id}')
-          .withPathParams('genreId', '$S{id}')
-          .expectStatus(200);
-      });
+    it('should get one genre', () => {
+      return pactum
+        .spec()
+        .get('/genres/{id}')
+        .withPathParams('id', '$S{genreId}')
+        .expectStatus(200);
     });
 
-    describe('Create not create a genre', () => {
-      it('should not create a new author without authorization', () => {
-        return pactum.spec().post('/genres').expectStatus(401).withBody({
-          name: 'Genre´s name',
-        });
+    it('should not create a new author without authorization', () => {
+      return pactum.spec().post('/genres').expectStatus(401).withBody({
+        name: 'Genre´s name',
       });
     });
   });
 
   describe('Studio', () => {
-    describe('Create new Studio', () => {
-      it('should create a new studio', () => {
-        return pactum
-          .spec()
-          .post('/studios')
-          .expectStatus(201)
-          .withBody({
-            name: 'studios´s name',
-          })
-          .stores('studioId', 'id')
-          .withHeaders({ Authorization: 'Bearer $S{access_token}' });
-      });
+    it('should create a new studio', () => {
+      return pactum
+        .spec()
+        .post('/studios')
+        .expectStatus(201)
+        .withBody({
+          name: 'studios´s name',
+        })
+        .stores('studioId', 'id')
+        .withHeaders({ Authorization: 'Bearer $S{access_token}' });
     });
 
-    describe('List all studios', () => {
-      it('should create a new studio', () => {
-        return pactum.spec().get('/studios').inspect().expectStatus(200);
-      });
+    it('should create a new studio', () => {
+      return pactum.spec().get('/studios').expectStatus(200);
     });
 
-    describe('Get one studio', () => {
-      it('should get one studio', () => {
-        return pactum
-          .spec()
-          .get('/studios/{id}')
-          .withPathParams('studioId', '$S{id}')
-          .expectStatus(200);
-      });
+    it('should get one studio', () => {
+      return pactum
+        .spec()
+        .get('/studios/{id}')
+        .withPathParams('id', '$S{studioId}')
+        .expectStatus(200);
     });
 
-    describe('Create not create a studio', () => {
-      it('should not create a new studio without authorization', () => {
-        return pactum.spec().post('/studios').expectStatus(401).withBody({
-          name: 'Genre´s name',
-        });
+    it('should not create a new studio without authorization', () => {
+      return pactum.spec().post('/studios').expectStatus(401).withBody({
+        name: 'Studios´s name',
       });
     });
   });
 
+  describe('Anime', () => {
+    it('should create a new anime', () => {
+      return pactum
+        .spec()
+        .post('/animes')
+        .expectStatus(201)
+        .withBody({
+          title: 'anime title',
+          id_author: '$S{authorId}',
+          id_studio: '$S{studioId}',
+          synopsis: 'anime synopis',
+          image: 'image url',
+          episodes: 12,
+          seasons: 1,
+          releaseDate: '2023-07-09T18:14:19.124Z',
+        })
+        .stores('animeId', 'id')
+        .withHeaders({ Authorization: 'Bearer $S{access_token}' });
+    });
+
+    it('should list all animes', () => {
+      return pactum.spec().get('/animes').expectStatus(200);
+    });
+
+    it('should get one anime', () => {
+      return pactum
+        .spec()
+        .get('/animes/{id}')
+        .withPathParams('id', '$S{animeId}')
+        .expectStatus(200);
+    });
+
+    it('should not create a new anime without authorization', () => {
+      return pactum.spec().post('/animes').expectStatus(401);
+    });
+  });
+
   describe('Character', () => {
-    describe('Create new Character', () => {
-      it('should create a new character', () => {
-        return pactum
-          .spec()
-          .post('/characters')
-          .expectStatus(201)
-          .withBody({
-            name: 'studios´s name',
-          })
-          .stores('studioId', 'id')
-          .withHeaders({ Authorization: 'Bearer $S{access_token}' });
+    it('should create a new character', () => {
+      return pactum
+        .spec()
+        .post('/characters')
+        .expectStatus(201)
+        .withBody({
+          id_anime: '$S{animeId}',
+          image: 'image url',
+          name: 'character´s name',
+        })
+        .stores('characterId', 'id')
+        .withHeaders({ Authorization: 'Bearer $S{access_token}' });
+    });
+
+    it('should list all characters', () => {
+      return pactum.spec().get('/characters').expectStatus(200);
+    });
+
+    it('should get one character', () => {
+      return pactum
+        .spec()
+        .get('/characters/{id}')
+        .withPathParams('id', '$S{characterId}')
+        .inspect()
+        .expectStatus(200);
+    });
+
+    it('should not create a new character without authorization', () => {
+      return pactum.spec().post('/characters').expectStatus(401).withBody({
+        name: 'Character´s name',
       });
     });
   });

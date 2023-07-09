@@ -13,30 +13,30 @@ import { AnimeService } from './anime.service';
 import { CreateAnimeDto } from './dto/create-anime.dto';
 import { UpdateAnimeDto } from './dto/update-anime.dto';
 import { AnimeFilterDto } from './dto/filter-anime.dto';
-import { RoleGuard, RtGuard } from 'src/common/guards';
-import { Roles } from 'src/common/decorators/roles.decorator';
-import { Role } from 'src/common/enums';
+import { AtGuard, RoleGuard } from '../common/guards';
+import { Roles } from '../common/decorators/roles.decorator';
+import { Role } from '../common/enums';
 
-@Controller('anime')
+@Controller('animes')
 export class AnimeController {
   constructor(private readonly animeService: AnimeService) {}
 
   @Post()
-  @UseGuards(RtGuard, RoleGuard)
+  @UseGuards(AtGuard, RoleGuard)
   @Roles(Role.Admin)
   create(@Body() createAnimeDto: CreateAnimeDto) {
     return this.animeService.create(createAnimeDto);
   }
 
   @Patch(':id')
-  @UseGuards(RtGuard, RoleGuard)
+  @UseGuards(AtGuard, RoleGuard)
   @Roles(Role.Admin)
   update(@Param('id') id: string, @Body() updateAnimeDto: UpdateAnimeDto) {
     return this.animeService.update(id, updateAnimeDto);
   }
 
   @Delete(':id')
-  @UseGuards(RtGuard, RoleGuard)
+  @UseGuards(AtGuard, RoleGuard)
   @Roles(Role.Admin)
   remove(@Param('id') id: string) {
     return this.animeService.remove(id);

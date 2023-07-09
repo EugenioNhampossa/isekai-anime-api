@@ -6,9 +6,9 @@ import {
 } from '@nestjs/common';
 import { CreateAnimeDto } from './dto/create-anime.dto';
 import { UpdateAnimeDto } from './dto/update-anime.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { AnimeFilterDto } from './dto/filter-anime.dto';
-import { paginante } from 'src/utils';
+import { paginante } from '../utils';
 import { Anime, Prisma } from '@prisma/client';
 
 @Injectable()
