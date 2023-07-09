@@ -6,11 +6,11 @@ import {
 } from '@nestjs/common';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { CharacterFiltedDTO } from './dto/filter-character.dto';
 import { PaginatedResult } from 'prisma-pagination';
 import { Character, Prisma } from '@prisma/client';
-import { paginante } from 'src/utils';
+import { paginante } from '../utils';
 
 @Injectable()
 export class CharacterService {
