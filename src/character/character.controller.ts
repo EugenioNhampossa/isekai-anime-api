@@ -12,10 +12,9 @@ import {
 import { CharacterService } from './character.service';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
-import { AtGuard, RoleGuard } from 'src/common/guards';
-import { Roles } from 'src/common/decorators/roles.decorator';
-import { Role } from 'src/common/enums';
-import { query } from 'express';
+import { AtGuard, RoleGuard } from '../common/guards';
+import { Roles } from '../common/decorators/roles.decorator';
+import { Role } from '../common/enums';
 import { CharacterFiltedDTO } from './dto/filter-character.dto';
 
 @Controller('characters')
