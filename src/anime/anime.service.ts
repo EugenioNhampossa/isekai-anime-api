@@ -43,7 +43,7 @@ export class AnimeService {
   async findAll(filter: AnimeFilterDto) {
     this.logger.log('Getting list of animes...', filter);
 
-    const characters = await paginante<Anime, Prisma.AnimeFindManyArgs>(
+    const animes = await paginante<Anime, Prisma.AnimeFindManyArgs>(
       this.prisma.anime,
       {
         where: {
@@ -59,18 +59,70 @@ export class AnimeService {
     });
 
     this.logger.log('List returned');
-    return characters;
+    return animes;
   }
 
   async findOne(id: string) {
-    return `This action returns a #${id} anime`;
+    this.logger.log('Getting an anime by id...', { id });
+
+    const anime = await this.prisma.anime
+      .findUnique({
+        where: {
+          id,
+        },
+      })
+      .catch((error) => {
+        if (error.code === 'P2025') {
+          throw new NotFoundException('Anime not found');
+        }
+
+        this.logger.error('Unexpected Error', error);
+        throw error;
+      });
+    this.logger.log('Anime returned');
+    return anime;
   }
 
   async update(id: string, updateAnimeDto: UpdateAnimeDto) {
-    return `This action updates a #${id} anime`;
+    this.logger.log('Updating an anime...', { id, updateAnimeDto });
+    const newAnime = await this.prisma.anime
+      .update({
+        where: {
+          id,
+        },
+        data: {
+          ...updateAnimeDto,
+        },
+      })
+      .catch((error) => {
+        if (error.code === 'P2025') {
+          throw new NotFoundException('Anime not found');
+        }
+        this.logger.error('Unexpected Error', error);
+        throw error;
+      });
+
+    this.logger.log('Anime updated');
+    return newAnime;
   }
 
   async remove(id: string) {
-    return `This action removes a #${id} anime`;
+    this.logger.log('Deleting an anime...', { id });
+    await this.prisma.anime
+      .delete({
+        where: {
+          id,
+        },
+      })
+      .catch((error) => {
+        if (error.code === 'P2025') {
+          throw new NotFoundException('Anime not found');
+        }
+
+        this.logger.error('Unexpected Error', error);
+
+        throw error;
+      });
+    this.logger.log('Anime deleted');
   }
 }
