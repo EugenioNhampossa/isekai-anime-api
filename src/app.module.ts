@@ -8,6 +8,8 @@ import { AuthorModule } from './author/author.module';
 import { StudioModule } from './studio/studio.module';
 import { CharacterModule } from './character/character.module';
 import { AnimeModule } from './anime/anime.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
@@ -23,5 +25,7 @@ import { AnimeModule } from './anime/anime.module';
     CharacterModule,
     AnimeModule,
   ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
